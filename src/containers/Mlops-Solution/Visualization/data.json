@@ -1,0 +1,364 @@
+{
+    "numericConstructor ": [
+      {
+        "name": "numeric",
+        "inputs ": [
+          {
+            "type": "numeric",
+            "new_col_name": "str",
+            "cfg": {
+              "operation": ["sum", "difference", "multiply", "divide"],
+              "left": "num_col",
+              "right": "num_col"
+            }
+          }
+        ],
+        "logo": "",
+        "api_path": "/build-column/{data_id}",
+        "description": "Add, subtract, multiply or divide two columns of numeric data or static numeric values."
+      }
+    ],
+    "stringConstructor": [
+      {
+        "name": "string",
+        "inputs ": [
+          {
+            "type": "string",
+            "new_col_name": "str",
+            "cfg": { "cols": ["cols"], "joinChar": "str" }
+          }
+        ],
+        "logo": "",
+        "api_path": "/build-column/{data_id}",
+        "description": "Concatenate columns together to form a string."
+      },
+      {
+        "name": "concatenate",
+        "inputs ": [
+          {
+            "type": "concatenate",
+            "new_col_name": "str",
+            "cfg": {"left": "col", "right": "col"}
+          }
+        ],
+        "logo": "",
+        "api_path": "/build-column/{data_id}",
+        "description": "Concatenate columns with raw strings or other columns to create a new string column."
+      },
+      {
+        "name": "replace",
+        "inputs ": [
+          {
+            "type": "replace",
+            "new_col_name": "str",
+            "cfg": {
+              "col"          : "col" ,
+              "search"       : "str" ,
+              "replacement"  : "str" ,
+              "caseSensitive": "Bool",
+              "regex"        : "Bool"
+            }
+          }
+        ],
+        "logo": "",
+        "api_path": "/build-column/{data_id}",
+        "description": "Execute different string replacement functions."
+      },
+      {
+        "name": "similarity",
+        "inputs ": [
+          {
+            "type": "similarity",
+            "new_col_name": "str",
+            "cfg": {
+              "left": "col",
+              "right": "col",
+              "algo": [
+                "levenshtein"         ,
+                "damerau-leveneshtein",
+                "jaro-winkler"        ,
+                "jaccard"
+              ],
+              "normalized": "bool"
+            },
+            "logo": "",
+            "api_path": "Calculate string similarity distances between two columns using one of the following algorithms: Levenshtein, Damerau-Leveneshtein, Jaro-Winkler, Jaccard Index."
+          }
+        ]
+      },
+      {
+        "name": "cleaning",
+        "inputs ": [
+          {
+            "type": "cleaning",
+            "new_col_name": "str",
+            "cfg": {
+              "col": "num_col",
+              "cleaners": [
+                "drop_multispace"       ,
+                "drop_punctuation"      ,
+                "stopwords"             ,
+                "nltk_stopwords"        ,
+                "drop_numbers"          ,
+                "keep_alpha"            ,
+                "normalize_accents"     ,
+                "drop_all_space"        ,
+                "drop_repeated_words"   ,
+                "update_case"           ,
+                "space_vals_to_empty"   ,
+                "underscore_to_space"   ,
+                "hidden_chars"          ,
+                "replace_hyphen_w_space"
+              ],
+              "caseType": ["upper", "lower", "title"]
+            },
+            "logo": "",
+            "api_path": "/build-column/{data_id}",
+            "description": "Clean string data of punctuation, numbers & other erroneous data using different functions."
+          }
+        ]
+      }
+    ],
+    "datetimeConstructor ": [
+      {
+        "name": "datetime",
+        "inputs ": [
+          {
+            "type": "datetime",
+            "new_col_name": "str",
+            "cfg": {
+              "col": "col",
+              "sections": [
+                { "timeDifference": ["now", "col"], "timeDifferenceCol": "col" },
+                {
+                  "property": [
+                    "minute"      , "hour"        , "time"        ,
+                    "date"        , "weekday"     , "weekday_name",
+                    "month"       , "quater"      , "year"
+                  ]
+                },
+                {
+                  "conversion": [
+                    "month_start"  , "month_end"    , "quarter_start",
+                    "quarter_end"  , "year_start"   , "year_end"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "logo": "",
+        "api_path": "/build-column/{data_id}",
+        "description": "Pull out properties (minute, hour, time...) or convert to date representations (month-end, month-start, year-end...) using datatime columns."
+      }
+    ],
+    "binsConstructor": [
+      {
+        "name": "bins",
+        "inputs ": [
+          {
+            "type": "bins",
+            "new_col_name": "str",
+            "cfg": {
+              "col": "num_col",
+              "operation": ["cut", "qcut"],
+              "bins": "integer",
+              "labels": "str"
+            }
+          }
+        ],
+        "logo": "",
+        "api_path": "/build-column/{data_id}",
+        "description": "Convert numeric data into bins using pandas cut or qcut functions.Lables are quoma seperated"
+      }
+    ],
+    "randomConstructor": [
+      {
+        "name": "random",
+        "inputs ": [
+          {
+            "type": "random",
+            "new_col_name": "str",
+            "cfg": {
+              "col": "num_col",
+              "sections": [
+                {"rand_type": "string", "length": "integer", "chars": "str"},
+                {"rand_type": "int", "low": "integer", "high": "integer"},
+                {
+                  "rand_type"  : "date",
+                  "start"      : "integer" ,
+                  "end"        : "str" ,
+                  "timestamps" : "bool",
+                  "businessDay": "bool"
+                },
+                {"rand_type": "bool"},
+                {"rand_type": "choice", "choices": "str"},
+                {"rand_type": "float", "low": "integer", "high": "integer"}
+              ]
+            }
+          }
+        ],
+        "logo": "",
+        "api_path": "/build-column/{data_id}",
+        "description": "Build a column of random data for different data types using range rules."
+      }
+    ],
+    "ColumnTransformer": [
+      {
+        "name": "type_conversion",
+        "inputs ": [
+          {
+            "type": "type_conversion",
+            "new_col_name": "str",
+            "cfg": {"col": "num_col", "from_type": [], "to_type": []},
+            "logo": "",
+            "api_path": "/build-column/{data_id}",
+            "description": "Convert columns of one type to another."
+          }
+        ]
+      },
+      {
+        "name": "groupby",
+        "inputs ": [
+          {
+            "type": "transform",
+            "new_col_name": "str",
+            "cfg": {
+              "group": ["cols"],
+              "col": "col",
+              "agg": [
+                "count"                ,
+                "uniqueCount"          ,
+                "sum"                  ,
+                "mean"                 ,
+                "keepFirst"            ,
+                "keepLast"             ,
+                "median"               ,
+                "minimum"              ,
+                "maximum"              ,
+                "standardDeviation"    ,
+                "variance"             ,
+                "meanAbsoluteDeviation",
+                "prodcutOfAll"
+              ]
+            },
+            "logo": "",
+            "api_path": "/build-column/{data_id}",
+            "description": "Transform numeric data of one column by grouping on others and applying an aggregation (sum, mean, count...)."
+          }
+        ]
+      },
+      {
+        "name": "winsorize",
+        "inputs ": [
+          {
+            "type": "winsorize",
+            "new_col_name": "str",
+            "cfg": {
+              "group": ["cols"],
+              "col": "col",
+              "limits": ["0-100"],
+              "inclusive": ["lower", "upper"]
+            },
+            "logo": "",
+            "api_path": "Remove outliers in your column by replacing values that fall at or below the lowest percentile with the maximum value in that group and replacing values that fall at or above highest percentile with the minimum value of that group."
+          }
+        ]
+      },
+      {
+        "name": "zscore_normalize",
+        "inputs ": [
+          {
+            "type": "zscore_normalize",
+            "new_col_name": "str",
+            "cfg": {"col": "num_col"},
+            "logo": "",
+            "api_path": "Normalize a numeric column by turning it into z-scores. Simply subtract it's mean and divide by it's standard deviation."
+          }
+        ]
+      },
+      {
+        "name": "standardize",
+        "inputs ": [
+          {
+            "type": "standardize",
+            "new_col_name": "str",
+            "cfg": { "col": "num_col", "algo": ["robust", "quantile", "power"] },
+            "logo": "",
+            "api_path": "/build-column/{data_id}",
+            "description": "Standardize a numeric column for outliers using one of the following scalars from sklearn: RobustScalar, QuantileTransformer, PowerTransformer."
+          }
+        ]
+      },
+      {
+        "name": "encoder",
+        "inputs ": [
+          {
+            "type": "encoder",
+            "new_col_name": "str",
+            "cfg": {
+              "col": "num_col",
+              "algo": ["one_hot", "ordinal", "label", "feature_hasher"],
+              "n": "integer"
+            },
+            "logo": "",
+            "api_path": "/build-column/{data_id}",
+            "description": "Encode categorical data as indicators using OneHotEncoder, OrdinalEncoder, LabelEncoder or FeatureHasher."
+          }
+        ]
+      },
+      {
+        "name": "diff_column",
+        "inputs ": [
+          {
+            "type": "diff",
+            "new_col_name": "str",
+            "cfg": {"col": "num_col", "periods": "integer"},
+            "logo": "",
+            "api_path": "/build-column/{data_id}",
+            "description": "Calculate differences between rows using Pandas` diff() function"
+          }
+        ]
+      },
+      {
+        "name": "cumsum",
+        "inputs ": [
+          {
+            "type": "cumsum",
+            "new_col_name": "str",
+            "cfg": { "cols": ["cols"], "group": ["cols"] },
+            "logo": "",
+            "api_path": "/build-column/{data_id}",
+            "description": "Calculate the cumulative sum of a column."
+          }
+        ]
+      },
+      {
+        "name": "substring",
+        "inputs ": [
+          {
+            "type": "substring",
+            "new_col_name": "str",
+            "cfg": {"col": "col", "start": "integer", "end": "integer"},
+            "logo": "",
+            "api_path": "/build-column/{data_id}",
+            "description": "Extract substring from string column by specifying start and end indices."
+          }
+        ]
+      },
+      {
+        "name": "split",
+        "inputs ": [
+          {
+            "type": "split",
+            "new_col_name": "str",
+            "cfg": {"col": "col", "delimiter": "str"},
+            "logo": "",
+            "api_path": "/build-column/{data_id}",
+            "description": "Split a string column by a sequence of characters into additional columns."
+          }
+        ]
+      }
+    ]
+  }
+  
