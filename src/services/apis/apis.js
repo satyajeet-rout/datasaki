@@ -1,4 +1,4 @@
-export const BaseUrl = "http://app.datasaki.com:8060"
+export const BaseUrl = "https://app.datasaki.com:8060"
 
 export const URIS = {
     DATASET : "/datasets/",
